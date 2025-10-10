@@ -65,7 +65,7 @@ export const insertBookingSchema = createInsertSchema(bookings).omit({
   organizationType: z.enum(["school", "college", "corporate", "other"]),
   organizationName: z.string().min(2, "Organization name is required"),
   eventDate: z.string().optional(),
-  amount: z.string().min(1, "Amount is required"),
+  amount: z.string().regex(/^\d+$/, "Amount must be a valid number").min(1, "Amount is required"),
 });
 
 export type InsertBooking = z.infer<typeof insertBookingSchema>;

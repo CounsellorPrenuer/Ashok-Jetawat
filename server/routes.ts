@@ -96,23 +96,72 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Update booking payment status
+  // Update booking payment status with signature verification
   app.patch("/api/bookings/:id/payment", async (req, res) => {
     try {
-      const { razorpayOrderId, razorpayPaymentId, paymentStatus } = req.body;
-      const booking = await storage.updateBookingPayment(
-        req.params.id,
-        razorpayOrderId,
-        razorpayPaymentId,
-        paymentStatus
-      );
-      if (!booking) {
+      const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+      
+      if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+        return res.status(400).json({ 
+          error: "Missing payment verification data" 
+        });
+      }
+
+      // Get the existing booking first
+      const existingBooking = await storage.getBooking(req.params.id);
+      if (!existingBooking) {
         return res.status(404).json({ error: "Booking not found" });
       }
+
+      // Verify that the order ID matches the booking
+      if (existingBooking.razorpayOrderId !== razorpay_order_id) {
+        console.error("Order ID mismatch: booking order", existingBooking.razorpayOrderId, "vs payment order", razorpay_order_id);
+        return res.status(400).json({ 
+          error: "Payment does not belong to this booking" 
+        });
+      }
+
+      // Verify Razorpay signature
+      const razorpayKeySecret = process.env.RAZORPAY_KEY_SECRET;
+      if (!razorpayKeySecret) {
+        console.error("Razorpay key secret not configured");
+        return res.status(500).json({ 
+          error: "Payment verification not configured" 
+        });
+      }
+
+      const crypto = await import("crypto");
+      const expectedSignature = crypto
+        .createHmac("sha256", razorpayKeySecret)
+        .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+        .digest("hex");
+
+      if (expectedSignature !== razorpay_signature) {
+        console.error("Payment signature verification failed for booking", req.params.id);
+        return res.status(400).json({ 
+          error: "Payment signature verification failed" 
+        });
+      }
+
+      // Signature and order verified, update booking
+      const booking = await storage.updateBookingPayment(
+        req.params.id,
+        razorpay_order_id,
+        razorpay_payment_id,
+        "completed"
+      );
+      
+      if (!booking) {
+        return res.status(500).json({ error: "Failed to update booking" });
+      }
+      
       res.json(booking);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error updating booking payment:", error);
-      res.status(500).json({ error: "Failed to update booking payment" });
+      res.status(500).json({ 
+        error: "Failed to update booking payment",
+        details: process.env.NODE_ENV === "development" ? error.message : undefined
+      });
     }
   });
 
