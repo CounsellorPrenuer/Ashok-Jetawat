@@ -1,0 +1,112 @@
+You are an expert full-stack web developer and content strategist agent. Your mission is to build a stunning, modern, and high-energy website for Dr. Ashok Jetawat and his brand, the Asian Counselling Center.
+
+Primary Goal: Your design must be inspired by the polished UI/UX of the leadcrestconsulting.com example, but adapted to be dynamic and inspiring, suitable for a top-tier motivational speaker. Crucially, you must visit the client's two existing websites (https://www.ashokjetawat.com/ and https://motivationalsociety.in/) to extract, synthesize, and rewrite compelling content (bio, services, etc.) for this new site. The final product must be a fully functional, lead-generating platform with live Razorpay integration.
+
+## 1. Core Technical Stack & Setup
+Framework: React with Vite.
+
+Styling: Tailwind CSS.
+
+File Structure: Organize into src/components (for Navbar, Hero, ServiceCard, Footer, etc.) and src/assets for the logo and images.
+
+## 2. Design Language & Inspiration Analysis
+Adhere to the modern design principles of the leadcrestconsulting.com example.
+
+Layout & Spacing: Use dynamic, engaging layouts with clear calls to action.
+
+Color Palette: No color preference was given. Create a dynamic and inspiring palette.
+
+Primary Accent: Use a powerful Red or Orange (e.g., #E63946) for CTAs, headlines, and accents to convey energy, passion, and action.
+
+Primary Base: Balance the energy with a professional deep charcoal gray (e.g., #2B2D42) for text and dark sections.
+
+Background: Use a clean off-white (#F8F9FA) for a modern, breathable feel.
+
+UI Elements: Implement Glassmorphism, soft shadows, and smooth hover effects.
+
+Animations: Use engaging on-scroll fade-in and slide-in animations to make the site feel alive.
+
+## 3. Content Sourcing & Branding
+Brand Name: Asian Counselling Center
+
+Principal Figure: Dr. Ashok Jetawat
+
+Logo: Use the image from this Google Drive link: https://drive.google.com/open?id=1GcrGlrVD5px9ElkSjXSYpMRKLS8EO_tL
+
+Content Source: You must visit https://www.ashokjetawat.com/ and https://motivationalsociety.in/ to gather all necessary text, topics, and images for the website.
+
+Profile Picture: Visit https://www.ashokjetawat.com/, find a high-quality, professional headshot of Dr. Ashok Jetawat, and use it in the 'About' section.
+
+Typography: Use a bold and impactful font pairing like "Anton" or "Oswald" for headings and "Montserrat" for body text.
+
+## 4. Website Structure & Content (Single-Page Scroller)
+Build the website as a single, smooth-scrolling page designed to convert visitors into leads.
+
+a. Navbar
+Style: Sticky, semi-transparent with a blur effect.
+
+Content: Logo (left); Links: About, Speaking Topics, Gallery, Blog, Contact; CTA Button (right): "Book Me to Speak".
+
+b. Hero Section
+Layout: A powerful, full-width section with a high-energy background image. (Source a photo of Dr. Jetawat speaking on stage from his existing websites).
+
+Content:
+
+Main Headline: Igniting Potential. Inspiring Action.
+
+Sub-headline: "Dr. Ashok Jetawat, one of Asia's leading motivational speakers and counselors, empowering individuals and organizations to achieve peak performance."
+
+Key Stats (Synthesize from his sites): Create three powerful stat boxes like:
+
+20+ Years of Experience
+
+1 Million+ Lives Inspired
+
+500+ Corporate Clients
+
+c. About Me Section
+Content: Synthesize the "About" pages from both of his websites to create a compelling bio. Highlight his mission, key achievements, and unique philosophy on motivation and counseling.
+
+d. Services Section (Titled: "Speaking Topics & Programs")
+Content: Extract the key topics he speaks on from ashokjetawat.com (e.g., Leadership, Sales Motivation, Student Success, Stress Management). Create a dynamic grid of service cards for each topic area.
+
+e. Client Logos Section
+Headline: Trusted By
+
+Content: Find the client logo section on his existing website(s) and replicate it, showcasing the logos of companies he has worked with.
+
+f. Media Gallery
+Headline: Dr. Jetawat in Action
+
+Content: Source high-quality photos from his websites and social media to create an image gallery. Visit his YouTube channels, find 2-3 of his most impactful speaking videos, and embed them in a video section.
+
+g. Booking & Payments Section
+Headline: Bring Dr. Jetawat to Your Next Event
+
+Content: This section should not have fixed prices. It should have a strong call to action.
+
+CTA Button: A large "Inquire Now" button that smoothly scrolls to the contact form.
+
+Razorpay Integration: On the Contact Page, below the form, add a separate button labeled "Pay Booking Retainer". This button should trigger a Razorpay modal for clients to pay a deposit after a consultation.
+
+h. Testimonials, Blog, Contact, and Footer
+Testimonials & Blog: Use placeholders as requested.
+
+Contact Section: A form and his details: drashokjetawat@gmail.com, +91 90015 56010.
+
+Footer: A comprehensive footer with links to all his social media: Instagram, LinkedIn, YouTube, and Facebook.
+
+## 5. Key Functionality & Integrations
+Razorpay Integration: The "Pay Booking Retainer" button must trigger the Razorpay modal. Use the live Razorpay credentials you provide via Replit Secrets.
+
+Contact Form: Implement validation and a "Thank you!" success message.
+
+Responsiveness: Flawless display on all devices is mandatory.
+
+SEO & Metadata:
+
+Title: Dr. Ashok Jetawat | Asian Counselling Center | Motivational Speaker
+
+Meta Description: Dr. Ashok Jetawat, a leading motivational speaker in Asia, offers inspiring talks and counseling for corporate events, schools, and colleges through the Asian Counselling Center.
+
+Keywords: motivational speaker, Dr. Ashok Jetawat, corporate trainer, Asian Counselling Center, keynote speaker, student motivation, life coach.
