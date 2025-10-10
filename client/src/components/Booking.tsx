@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, CreditCard, Sparkles } from "lucide-react";
+import FreeCallModal from "./FreeCallModal";
 
 export default function Booking() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleInquire = () => {
     const element = document.getElementById('contact');
@@ -83,12 +85,12 @@ export default function Booking() {
                 <Button 
                   size="lg"
                   variant="secondary"
-                  onClick={handleInquire}
+                  onClick={() => setIsModalOpen(true)}
                   className="w-full sm:w-auto text-lg px-8 py-6 font-semibold"
                   data-testid="button-inquire-now"
                 >
                   <Calendar className="w-5 h-5 mr-2" />
-                  Inquire Now
+                  Book a Free Call
                 </Button>
               </motion.div>
               
@@ -119,6 +121,8 @@ export default function Booking() {
           </div>
         </motion.div>
       </div>
+
+      <FreeCallModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

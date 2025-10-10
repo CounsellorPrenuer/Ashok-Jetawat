@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import heroImage from "@assets/stock_images/business_conference__1ccecf8f.jpg";
 import { TrendingUp, Users, Award, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import FreeCallModal from "./FreeCallModal";
 
 export default function Hero() {
   const [scrollY, setScrollY] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -13,11 +15,8 @@ export default function Hero() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToBooking = () => {
-    const element = document.getElementById('booking');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
   const scrollToAbout = () => {
@@ -92,10 +91,10 @@ export default function Hero() {
           <Button 
             size="lg"
             className="text-lg px-8 py-6 animate-glow"
-            onClick={scrollToBooking}
+            onClick={openModal}
             data-testid="hero-button-book"
           >
-            Book Me to Speak
+            Book a Free Call
           </Button>
           <Button 
             size="lg"
@@ -183,6 +182,8 @@ export default function Hero() {
           <ChevronDown className="w-8 h-8" />
         </button>
       </motion.div>
+
+      <FreeCallModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

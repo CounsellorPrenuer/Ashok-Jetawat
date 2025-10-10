@@ -2,10 +2,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import FreeCallModal from "./FreeCallModal";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -81,12 +83,12 @@ export default function Navbar() {
               whileTap={{ scale: 0.95 }}
             >
               <Button 
-                onClick={() => scrollToSection('booking')}
+                onClick={() => setIsModalOpen(true)}
                 variant="default"
                 className="animate-glow"
                 data-testid="button-book-speaker"
               >
-                Book Me to Speak
+                Book a Free Call
               </Button>
             </motion.div>
           </div>
@@ -156,17 +158,19 @@ export default function Navbar() {
                 transition={{ duration: 0.2, delay: 0.3 }}
               >
                 <Button 
-                  onClick={() => scrollToSection('booking')}
+                  onClick={() => setIsModalOpen(true)}
                   className="w-full mt-2"
                   data-testid="mobile-button-book-speaker"
                 >
-                  Book Me to Speak
+                  Book a Free Call
                 </Button>
               </motion.div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <FreeCallModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </motion.nav>
   );
 }
