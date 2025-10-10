@@ -73,19 +73,6 @@ export default function About() {
                 </div>
                 <div className="text-sm text-primary-foreground/90">Multiple Degrees</div>
               </motion.div>
-
-              <motion.div
-                className="absolute -top-4 -left-4 w-24 h-24 border-4 border-primary rounded-full -z-10"
-                animate={{ 
-                  scale: [1, 1.1, 1],
-                  rotate: [0, 180, 360] 
-                }}
-                transition={{ 
-                  duration: 8, 
-                  repeat: Infinity, 
-                  ease: "linear" 
-                }}
-              />
             </div>
           </motion.div>
 
