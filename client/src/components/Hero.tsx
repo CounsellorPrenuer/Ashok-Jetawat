@@ -1,19 +1,12 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import heroImage from "@assets/stock_images/business_conference__1ccecf8f.jpg";
 import { TrendingUp, Users, Award, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import FreeCallModal from "./FreeCallModal";
 
 export default function Hero() {
-  const [scrollY, setScrollY] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -28,13 +21,12 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <motion.div 
+      <div 
         className="absolute inset-0 z-0"
         style={{
           backgroundImage: `url(${heroImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          transform: `translateY(${scrollY * 0.5}px)`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-foreground/95 via-foreground/85 to-foreground/75" />
@@ -47,7 +39,7 @@ export default function Hero() {
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
         </motion.div>
-      </motion.div>
+      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
         <motion.div
