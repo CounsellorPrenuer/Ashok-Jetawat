@@ -10,6 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 interface FreeCallModalProps {
   isOpen: boolean;
@@ -23,16 +26,32 @@ export default function FreeCallModal({ isOpen, onClose }: FreeCallModalProps) {
     background: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const { toast } = useToast();
+
+  const createLeadMutation = useMutation({
+    mutationFn: async (data: typeof formData) => {
+      return await apiRequest("POST", "/api/leads", data);
+    },
+    onSuccess: () => {
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ fullName: '', phoneNumber: '', background: '' });
+        onClose();
+      }, 2000);
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to submit. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Free call booking:', formData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ fullName: '', phoneNumber: '', background: '' });
-      onClose();
-    }, 2000);
+    createLeadMutation.mutate(formData);
   };
 
   return (
@@ -173,10 +192,11 @@ export default function FreeCallModal({ isOpen, onClose }: FreeCallModalProps) {
                       type="submit" 
                       className="w-full text-lg py-6" 
                       size="lg"
+                      disabled={createLeadMutation.isPending}
                       data-testid="modal-button-submit"
                     >
                       <Phone className="w-5 h-5 mr-2" />
-                      Book a Free Call
+                      {createLeadMutation.isPending ? "Submitting..." : "Book a Free Call"}
                     </Button>
                   </form>
                 ) : (

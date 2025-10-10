@@ -4,23 +4,13 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, CreditCard, Sparkles } from "lucide-react";
 import FreeCallModal from "./FreeCallModal";
+import PaymentModal from "./PaymentModal";
 
 export default function Booking() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleInquire = () => {
-    const element = document.getElementById('contact');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handlePayment = () => {
-    console.log('Razorpay payment modal triggered');
-    alert('Razorpay payment integration will be added in the next phase');
-  };
+  const [isFreeCallModalOpen, setIsFreeCallModalOpen] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   return (
     <section id="booking" className="py-20 lg:py-32 bg-background relative overflow-hidden">
@@ -85,7 +75,7 @@ export default function Booking() {
                 <Button 
                   size="lg"
                   variant="secondary"
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={() => setIsFreeCallModalOpen(true)}
                   className="w-full sm:w-auto text-lg px-8 py-6 font-semibold"
                   data-testid="button-inquire-now"
                 >
@@ -100,7 +90,7 @@ export default function Booking() {
               >
                 <Button 
                   size="lg"
-                  onClick={handlePayment}
+                  onClick={() => setIsPaymentModalOpen(true)}
                   className="w-full sm:w-auto bg-primary-foreground text-primary hover:bg-primary-foreground/90 text-lg px-8 py-6 font-semibold animate-glow"
                   data-testid="button-pay-retainer"
                 >
@@ -122,7 +112,8 @@ export default function Booking() {
         </motion.div>
       </div>
 
-      <FreeCallModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <FreeCallModal isOpen={isFreeCallModalOpen} onClose={() => setIsFreeCallModalOpen(false)} />
+      <PaymentModal isOpen={isPaymentModalOpen} onClose={() => setIsPaymentModalOpen(false)} />
     </section>
   );
 }
