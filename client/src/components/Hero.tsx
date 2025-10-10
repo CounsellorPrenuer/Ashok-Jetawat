@@ -161,20 +161,6 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <button 
-          onClick={scrollToAbout}
-          className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-          data-testid="scroll-indicator"
-        >
-          <ChevronDown className="w-8 h-8" />
-        </button>
-      </motion.div>
-
       <FreeCallModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
