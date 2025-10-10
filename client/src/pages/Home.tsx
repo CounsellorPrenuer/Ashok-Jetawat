@@ -4,6 +4,7 @@ import About from "@/components/About";
 import SpeakingTopics from "@/components/SpeakingTopics";
 import TrustedBy from "@/components/TrustedBy";
 import Gallery from "@/components/Gallery";
+import Pricing from "@/components/Pricing";
 import Booking from "@/components/Booking";
 import Blog from "@/components/Blog";
 import Contact from "@/components/Contact";
@@ -19,6 +20,7 @@ export default function Home() {
         <SpeakingTopics />
         <TrustedBy />
         <Gallery />
+        <Pricing />
         <Booking />
         <Blog />
         <Contact />
