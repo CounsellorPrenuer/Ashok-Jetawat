@@ -103,15 +103,11 @@ export default function SpeakingTopics() {
                 className="p-6 h-full hover-elevate active-elevate-2 transition-all cursor-pointer group"
                 data-testid={`topic-card-${index}`}
               >
-                <motion.div 
-                  className="mb-4"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
+                <div className="mb-4">
                   <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <topic.icon className="w-7 h-7 text-primary" />
                   </div>
-                </motion.div>
+                </div>
                 <h3 className="font-heading font-semibold text-xl mb-3 group-hover:text-primary transition-colors">{topic.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{topic.description}</p>
               </Card>
