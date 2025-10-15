@@ -153,7 +153,7 @@ const pricingData: Record<string, CategoryData> = {
   },
 };
 
-function PricingCard({ pkg, delay }: { pkg: PricingPackage; delay: number }) {
+function PricingCard({ pkg, delay, isPremium = false }: { pkg: PricingPackage; delay: number; isPremium?: boolean }) {
   const planSlug = pkg.planName.toLowerCase().replace(/\s+/g, '-');
   
   return (
@@ -161,9 +161,22 @@ function PricingCard({ pkg, delay }: { pkg: PricingPackage; delay: number }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      className="flex flex-col p-8 rounded-lg border border-border bg-card shadow-lg hover:shadow-xl transition-shadow"
+      className={`flex flex-col p-8 rounded-lg relative ${
+        isPremium 
+          ? 'border-2 border-primary bg-card shadow-2xl hover:shadow-2xl ring-2 ring-primary/20' 
+          : 'border border-border bg-card shadow-lg hover:shadow-xl'
+      } transition-all`}
       data-testid={`pricing-card-${planSlug}`}
     >
+      {isPremium && (
+        <div 
+          className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap"
+          data-testid="badge-recommended"
+        >
+          RECOMMENDED
+        </div>
+      )}
+      
       <div className="mb-6">
         <p 
           className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2"
@@ -178,7 +191,7 @@ function PricingCard({ pkg, delay }: { pkg: PricingPackage; delay: number }) {
           {pkg.planName}
         </h3>
         <p 
-          className="text-4xl font-bold text-primary"
+          className={`text-4xl font-bold ${isPremium ? 'text-primary' : 'text-primary'}`}
           data-testid={`text-price-${planSlug}`}
         >
           {pkg.price}
@@ -214,6 +227,7 @@ function PricingCard({ pkg, delay }: { pkg: PricingPackage; delay: number }) {
       <Button 
         className="w-full" 
         size="lg"
+        variant={isPremium ? "default" : "outline"}
         data-testid={`button-buy-${planSlug}`}
       >
         {pkg.buttonText}
@@ -283,9 +297,9 @@ export default function Pricing() {
 
           {Object.entries(pricingData).map(([key, data]) => (
             <TabsContent key={key} value={key} className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <PricingCard pkg={data.standard} delay={0} />
-                <PricingCard pkg={data.premium} delay={0.1} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto pt-12">
+                <PricingCard pkg={data.standard} delay={0} isPremium={false} />
+                <PricingCard pkg={data.premium} delay={0.1} isPremium={true} />
               </div>
             </TabsContent>
           ))}
