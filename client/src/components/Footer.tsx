@@ -122,6 +122,7 @@ export default function Footer() {
           transition={{ duration: 0.6, delay: 0.8 }}
         >
           <p>&copy; {new Date().getFullYear()} Asian Counselling Center. All rights reserved.</p>
+          <p className="mt-2" data-testid="text-mentoria-partnership">In partnership with Mentoria for enhanced career guidance services.</p>
         </motion.div>
       </div>
     </footer>
