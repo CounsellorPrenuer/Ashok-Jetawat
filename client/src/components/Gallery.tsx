@@ -1,15 +1,19 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import galleryImage1 from "@assets/stock_images/professional_corpora_b2054b8f.jpg";
-import galleryImage2 from "@assets/stock_images/professional_corpora_f0eabfdc.jpg";
-import galleryImage3 from "@assets/stock_images/professional_corpora_2d412084.jpg";
+import galleryImage1 from "@assets/image-1_1761559858607.jpg";
+import galleryImage2 from "@assets/image-2_1761559858615.jpeg";
+import galleryImage3 from "@assets/image-3_1761559858615.jpg";
+import galleryImage4 from "@assets/image-4_1761559858616.jpg";
+import galleryImage5 from "@assets/image-5_1761559858617.jpeg";
 import { X } from "lucide-react";
 
 const images = [
-  { src: galleryImage1, alt: "Corporate training session" },
-  { src: galleryImage2, alt: "Seminar presentation" },
-  { src: galleryImage3, alt: "Workshop event" },
+  { src: galleryImage1, alt: "Dr. Jetawat speaking to corporate audience" },
+  { src: galleryImage2, alt: "Dr. Jetawat conducting seminar" },
+  { src: galleryImage3, alt: "Dr. Jetawat at school assembly" },
+  { src: galleryImage4, alt: "Dr. Jetawat addressing outdoor gathering" },
+  { src: galleryImage5, alt: "Dr. Jetawat motivational session" },
 ];
 
 export default function Gallery() {

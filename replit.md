@@ -162,6 +162,13 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+**October 27, 2025**:
+- Updated Gallery section ("Dr. Jetawat in Action") with 5 authentic images of Dr. Jetawat's speaking engagements
+- Added Pricing navigation link to navbar (positioned between Gallery and Blog)
+- Added Mentoria partnership acknowledgment to footer: "In partnership with Mentoria for enhanced career guidance services."
+- Premium pricing cards enhanced with "RECOMMENDED" badge, thicker borders, enhanced shadows, and subtle ring glow
+- Gallery now showcases real photos: corporate training, school assemblies, outdoor gatherings, and seminar presentations
+
 **October 10, 2025**:
 - Implemented complete backend functionality with PostgreSQL schema for leads and bookings
 - Created secure Razorpay payment integration with HMAC-SHA256 signature verification
