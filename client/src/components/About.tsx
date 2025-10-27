@@ -146,6 +146,110 @@ export default function About() {
             </motion.div>
           </motion.div>
         </motion.div>
+
+        <motion.div 
+          className="mt-20 pt-12 border-t border-border/50"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <h3 className="text-2xl lg:text-3xl font-heading font-semibold text-center mb-12" data-testid="text-memberships-heading">
+            Active member of:
+          </h3>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-8 items-center justify-items-center">
+            <motion.div 
+              className="flex flex-col items-center gap-3 text-center"
+              whileHover={{ scale: 1.05 }}
+              data-testid="membership-csi"
+            >
+              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
+                <span className="text-xl font-bold text-primary">CSI</span>
+              </div>
+              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
+                Computer Society of India (CSI)
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="flex flex-col items-center gap-3 text-center"
+              whileHover={{ scale: 1.05 }}
+              data-testid="membership-ucci"
+            >
+              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
+                <span className="text-xl font-bold text-primary">UCCI</span>
+              </div>
+              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
+                Udaipur Chamber of Commerce & Industry (UCCI)
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="flex flex-col items-center gap-3 text-center"
+              whileHover={{ scale: 1.05 }}
+              data-testid="membership-india"
+            >
+              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
+                <span className="text-sm font-bold text-primary">INDIA</span>
+              </div>
+              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
+                The Institution of Engineers (INDIA)
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="flex flex-col items-center gap-3 text-center"
+              whileHover={{ scale: 1.05 }}
+              data-testid="membership-istd"
+            >
+              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
+                <span className="text-xl font-bold text-primary">ISTD</span>
+              </div>
+              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
+                The Indian Society for Training and Development (ISTD)
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="flex flex-col items-center gap-3 text-center"
+              whileHover={{ scale: 1.05 }}
+              data-testid="membership-iiie"
+            >
+              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
+                <span className="text-xl font-bold text-primary">IIIE</span>
+              </div>
+              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
+                Indian Institution of Industrial Engineering (IIIE)
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="flex flex-col items-center gap-3 text-center"
+              whileHover={{ scale: 1.05 }}
+              data-testid="membership-iimm"
+            >
+              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
+                <span className="text-xl font-bold text-primary">IIMM</span>
+              </div>
+              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
+                Indian Institute Materials Management (IIMM)
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="flex flex-col items-center gap-3 text-center"
+              whileHover={{ scale: 1.05 }}
+              data-testid="membership-jsg"
+            >
+              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
+                <span className="text-xl font-bold text-primary">JSG</span>
+              </div>
+              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
+                Jain Social Group (JSG)
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

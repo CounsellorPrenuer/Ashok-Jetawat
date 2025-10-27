@@ -164,10 +164,12 @@ Preferred communication style: Simple, everyday language.
 
 **October 27, 2025**:
 - Updated Gallery section ("Dr. Jetawat in Action") with 5 authentic images of Dr. Jetawat's speaking engagements
+- Added 2 featured videos in Gallery section: Dr. Jetawat's featured video and student testimonial
 - Added Pricing navigation link to navbar (positioned between Gallery and Blog)
 - Added Mentoria partnership acknowledgment to footer: "In partnership with Mentoria for enhanced career guidance services."
 - Premium pricing cards enhanced with "RECOMMENDED" badge, thicker borders, enhanced shadows, and subtle ring glow
 - Gallery now showcases real photos: corporate training, school assemblies, outdoor gatherings, and seminar presentations
+- Added "Active member of:" section in About component displaying 7 professional organization memberships (CSI, UCCI, INDIA, ISTD, IIIE, IIMM, JSG) with circular badges and hover animations
 
 **October 10, 2025**:
 - Implemented complete backend functionality with PostgreSQL schema for leads and bookings
