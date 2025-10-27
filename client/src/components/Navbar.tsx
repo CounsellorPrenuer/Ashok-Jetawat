@@ -2,12 +2,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import FreeCallModal from "./FreeCallModal";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -76,22 +74,6 @@ export default function Navbar() {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
               </motion.button>
             ))}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: 0.5 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button 
-                onClick={() => setIsModalOpen(true)}
-                variant="default"
-                className="animate-glow"
-                data-testid="button-book-speaker"
-              >
-                Book a Free Call
-              </Button>
-            </motion.div>
           </div>
 
           <div className="md:hidden">
@@ -153,25 +135,10 @@ export default function Navbar() {
                   {item.label}
                 </motion.button>
               ))}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2, delay: 0.3 }}
-              >
-                <Button 
-                  onClick={() => setIsModalOpen(true)}
-                  className="w-full mt-2"
-                  data-testid="mobile-button-book-speaker"
-                >
-                  Book a Free Call
-                </Button>
-              </motion.div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <FreeCallModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </motion.nav>
   );
 }
