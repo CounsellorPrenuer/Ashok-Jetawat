@@ -8,6 +8,7 @@ import Pricing from "@/components/Pricing";
 import Booking from "@/components/Booking";
 import Blog from "@/components/Blog";
 import Contact from "@/components/Contact";
+import PartnershipHighlight from "@/components/PartnershipHighlight";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
         <Booking />
         <Blog />
         <Contact />
+        <PartnershipHighlight />
       </main>
       <Footer />
     </div>

@@ -174,6 +174,7 @@ Preferred communication style: Simple, everyday language.
 - Fixed FreeCallModal positioning to properly center on screen with scrollable container and vertical margins for better UX on all screen sizes
 - Removed "Book a Free Call" button from navbar (keeping only in Hero section) as per user request
 - Made FreeCallModal significantly more compact: reduced padding (p-4), smaller inputs (h-9), condensed sections, removed large benefit boxes and timeline, simplified to essential form fields + simple footer badges for better screen fit
+- Added Partnership Highlight section below Contact featuring Mentoria collaboration with 4 stat cards (3.5L+ mentored, 240+ corporate partners, 350+ schools, 1000+ webinar hours), gradient text, colorful icons, and external link to Mentoria platform
 
 **October 10, 2025**:
 - Implemented complete backend functionality with PostgreSQL schema for leads and bookings
