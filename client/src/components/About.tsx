@@ -2,6 +2,13 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import profileImage from "@assets/profile_1760084378944.jpeg";
+import csiLogo from "@assets/logo-1_1761560597253.png";
+import ucciLogo from "@assets/logo-2_1761560597254.png";
+import indiaLogo from "@assets/logo-3_1761560597255.png";
+import istdLogo from "@assets/logo-4_1761560597256.png";
+import iiieLogo from "@assets/logo-5_1761560597257.png";
+import iimmLogo from "@assets/logo-6_1761560597258.png";
+import jsgLogo from "@assets/logo-7_1761560597258.png";
 import { Award, BookOpen, GraduationCap, Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
@@ -163,8 +170,12 @@ export default function About() {
               whileHover={{ scale: 1.05 }}
               data-testid="membership-csi"
             >
-              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
-                <span className="text-xl font-bold text-primary">CSI</span>
+              <div className="w-24 h-24 flex items-center justify-center">
+                <img 
+                  src={csiLogo} 
+                  alt="Computer Society of India" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
                 Computer Society of India (CSI)
@@ -176,8 +187,12 @@ export default function About() {
               whileHover={{ scale: 1.05 }}
               data-testid="membership-ucci"
             >
-              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
-                <span className="text-xl font-bold text-primary">UCCI</span>
+              <div className="w-24 h-24 flex items-center justify-center">
+                <img 
+                  src={ucciLogo} 
+                  alt="Udaipur Chamber of Commerce & Industry" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
                 Udaipur Chamber of Commerce & Industry (UCCI)
@@ -189,8 +204,12 @@ export default function About() {
               whileHover={{ scale: 1.05 }}
               data-testid="membership-india"
             >
-              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
-                <span className="text-sm font-bold text-primary">INDIA</span>
+              <div className="w-24 h-24 flex items-center justify-center">
+                <img 
+                  src={indiaLogo} 
+                  alt="The Institution of Engineers" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
                 The Institution of Engineers (INDIA)
@@ -202,8 +221,12 @@ export default function About() {
               whileHover={{ scale: 1.05 }}
               data-testid="membership-istd"
             >
-              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
-                <span className="text-xl font-bold text-primary">ISTD</span>
+              <div className="w-24 h-24 flex items-center justify-center">
+                <img 
+                  src={istdLogo} 
+                  alt="The Indian Society for Training and Development" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
                 The Indian Society for Training and Development (ISTD)
@@ -215,8 +238,12 @@ export default function About() {
               whileHover={{ scale: 1.05 }}
               data-testid="membership-iiie"
             >
-              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
-                <span className="text-xl font-bold text-primary">IIIE</span>
+              <div className="w-24 h-24 flex items-center justify-center">
+                <img 
+                  src={iiieLogo} 
+                  alt="Indian Institution of Industrial Engineering" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
                 Indian Institution of Industrial Engineering (IIIE)
@@ -228,8 +255,12 @@ export default function About() {
               whileHover={{ scale: 1.05 }}
               data-testid="membership-iimm"
             >
-              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
-                <span className="text-xl font-bold text-primary">IIMM</span>
+              <div className="w-24 h-24 flex items-center justify-center">
+                <img 
+                  src={iimmLogo} 
+                  alt="Indian Institute Materials Management" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
                 Indian Institute Materials Management (IIMM)
@@ -241,8 +272,12 @@ export default function About() {
               whileHover={{ scale: 1.05 }}
               data-testid="membership-jsg"
             >
-              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center">
-                <span className="text-xl font-bold text-primary">JSG</span>
+              <div className="w-24 h-24 flex items-center justify-center">
+                <img 
+                  src={jsgLogo} 
+                  alt="Jain Social Group" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
                 Jain Social Group (JSG)

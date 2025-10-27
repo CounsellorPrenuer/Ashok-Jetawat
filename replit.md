@@ -169,7 +169,7 @@ Preferred communication style: Simple, everyday language.
 - Added Mentoria partnership acknowledgment to footer: "In partnership with Mentoria for enhanced career guidance services."
 - Premium pricing cards enhanced with "RECOMMENDED" badge, thicker borders, enhanced shadows, and subtle ring glow
 - Gallery now showcases real photos: corporate training, school assemblies, outdoor gatherings, and seminar presentations
-- Added "Active member of:" section in About component displaying 7 professional organization memberships (CSI, UCCI, INDIA, ISTD, IIIE, IIMM, JSG) with circular badges and hover animations
+- Added "Active member of:" section in About component displaying 7 professional organization memberships with authentic logos (CSI, UCCI, INDIA, ISTD, IIIE, IIMM, JSG) and hover animations
 
 **October 10, 2025**:
 - Implemented complete backend functionality with PostgreSQL schema for leads and bookings
