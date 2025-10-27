@@ -100,6 +100,21 @@ export default function Gallery() {
             <motion.div 
               className="aspect-video rounded-xl overflow-hidden bg-muted shadow-lg"
               whileHover={{ scale: 1.02 }}
+              data-testid="video-featured-1"
+            >
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/e6x3qtwQjmM"
+                title="Dr. Jetawat Featured Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </motion.div>
+            <motion.div 
+              className="aspect-video rounded-xl overflow-hidden bg-muted shadow-lg"
+              whileHover={{ scale: 1.02 }}
               data-testid="video-testimonial"
             >
               <iframe
@@ -112,12 +127,6 @@ export default function Gallery() {
                 className="w-full h-full"
               />
             </motion.div>
-            <div className="aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center text-muted-foreground border border-border" data-testid="video-placeholder">
-              <div className="text-center p-6">
-                <div className="text-lg font-medium mb-2">More videos coming soon</div>
-                <div className="text-sm">Subscribe to our YouTube channel</div>
-              </div>
-            </div>
           </div>
         </motion.div>
       </div>
