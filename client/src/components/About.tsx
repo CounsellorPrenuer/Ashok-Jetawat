@@ -2,13 +2,13 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import profileImage from "@assets/profile_1760084378944.jpeg";
-import csiLogo from "@assets/logo-1_1761560597253.png";
-import ucciLogo from "@assets/logo-2_1761560597254.png";
-import indiaLogo from "@assets/logo-3_1761560597255.png";
-import istdLogo from "@assets/logo-4_1761560597256.png";
-import iiieLogo from "@assets/logo-5_1761560597257.png";
-import iimmLogo from "@assets/logo-6_1761560597258.png";
-import jsgLogo from "@assets/logo-7_1761560597258.png";
+import csiLogo from "@assets/logo-1-removebg-preview_1761561067703.png";
+import ucciLogo from "@assets/logo-2-removebg-preview_1761561067705.png";
+import indiaLogo from "@assets/logo-3-removebg-preview_1761561067706.png";
+import istdLogo from "@assets/logo-4-removebg-preview_1761561067706.png";
+import iiieLogo from "@assets/logo-5-removebg-preview_1761561067707.png";
+import iimmLogo from "@assets/logo-6-removebg-preview_1761561067708.png";
+import jsgLogo from "@assets/logo-7-removebg-preview_1761561067700.png";
 import { Award, BookOpen, GraduationCap, Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
@@ -164,125 +164,116 @@ export default function About() {
             Active member of:
           </h3>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-8 items-center justify-items-center">
-            <motion.div 
-              className="flex flex-col items-center gap-3 text-center"
-              whileHover={{ scale: 1.05 }}
-              data-testid="membership-csi"
-            >
-              <div className="w-24 h-24 flex items-center justify-center">
+          <div className="flex flex-col gap-6">
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6 items-center justify-items-center">
+              <motion.div 
+                whileHover={{ scale: 1.05 }}
+                data-testid="membership-logo-csi"
+                className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center"
+              >
                 <img 
                   src={csiLogo} 
                   alt="Computer Society of India" 
                   className="w-full h-full object-contain"
                 />
-              </div>
-              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
-                Computer Society of India (CSI)
-              </div>
-            </motion.div>
+              </motion.div>
 
-            <motion.div 
-              className="flex flex-col items-center gap-3 text-center"
-              whileHover={{ scale: 1.05 }}
-              data-testid="membership-ucci"
-            >
-              <div className="w-24 h-24 flex items-center justify-center">
+              <motion.div 
+                whileHover={{ scale: 1.05 }}
+                data-testid="membership-logo-ucci"
+                className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center"
+              >
                 <img 
                   src={ucciLogo} 
                   alt="Udaipur Chamber of Commerce & Industry" 
                   className="w-full h-full object-contain"
                 />
-              </div>
-              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
-                Udaipur Chamber of Commerce & Industry (UCCI)
-              </div>
-            </motion.div>
+              </motion.div>
 
-            <motion.div 
-              className="flex flex-col items-center gap-3 text-center"
-              whileHover={{ scale: 1.05 }}
-              data-testid="membership-india"
-            >
-              <div className="w-24 h-24 flex items-center justify-center">
+              <motion.div 
+                whileHover={{ scale: 1.05 }}
+                data-testid="membership-logo-india"
+                className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center"
+              >
                 <img 
                   src={indiaLogo} 
                   alt="The Institution of Engineers" 
                   className="w-full h-full object-contain"
                 />
-              </div>
-              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
-                The Institution of Engineers (INDIA)
-              </div>
-            </motion.div>
+              </motion.div>
 
-            <motion.div 
-              className="flex flex-col items-center gap-3 text-center"
-              whileHover={{ scale: 1.05 }}
-              data-testid="membership-istd"
-            >
-              <div className="w-24 h-24 flex items-center justify-center">
+              <motion.div 
+                whileHover={{ scale: 1.05 }}
+                data-testid="membership-logo-istd"
+                className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center"
+              >
                 <img 
                   src={istdLogo} 
                   alt="The Indian Society for Training and Development" 
                   className="w-full h-full object-contain"
                 />
-              </div>
-              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
-                The Indian Society for Training and Development (ISTD)
-              </div>
-            </motion.div>
+              </motion.div>
 
-            <motion.div 
-              className="flex flex-col items-center gap-3 text-center"
-              whileHover={{ scale: 1.05 }}
-              data-testid="membership-iiie"
-            >
-              <div className="w-24 h-24 flex items-center justify-center">
+              <motion.div 
+                whileHover={{ scale: 1.05 }}
+                data-testid="membership-logo-iiie"
+                className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center"
+              >
                 <img 
                   src={iiieLogo} 
                   alt="Indian Institution of Industrial Engineering" 
                   className="w-full h-full object-contain"
                 />
-              </div>
-              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
-                Indian Institution of Industrial Engineering (IIIE)
-              </div>
-            </motion.div>
+              </motion.div>
 
-            <motion.div 
-              className="flex flex-col items-center gap-3 text-center"
-              whileHover={{ scale: 1.05 }}
-              data-testid="membership-iimm"
-            >
-              <div className="w-24 h-24 flex items-center justify-center">
+              <motion.div 
+                whileHover={{ scale: 1.05 }}
+                data-testid="membership-logo-iimm"
+                className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center"
+              >
                 <img 
                   src={iimmLogo} 
                   alt="Indian Institute Materials Management" 
                   className="w-full h-full object-contain"
                 />
-              </div>
-              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
-                Indian Institute Materials Management (IIMM)
-              </div>
-            </motion.div>
+              </motion.div>
 
-            <motion.div 
-              className="flex flex-col items-center gap-3 text-center"
-              whileHover={{ scale: 1.05 }}
-              data-testid="membership-jsg"
-            >
-              <div className="w-24 h-24 flex items-center justify-center">
+              <motion.div 
+                whileHover={{ scale: 1.05 }}
+                data-testid="membership-logo-jsg"
+                className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center"
+              >
                 <img 
                   src={jsgLogo} 
                   alt="Jain Social Group" 
                   className="w-full h-full object-contain"
                 />
+              </motion.div>
+            </div>
+
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6 items-start justify-items-center">
+              <div className="text-xs text-center text-muted-foreground max-w-[100px] leading-tight" data-testid="membership-text-csi">
+                Computer Society of India (CSI)
               </div>
-              <div className="text-xs text-muted-foreground max-w-[120px] leading-tight">
+              <div className="text-xs text-center text-muted-foreground max-w-[100px] leading-tight" data-testid="membership-text-ucci">
+                Udaipur Chamber of Commerce & Industry (UCCI)
+              </div>
+              <div className="text-xs text-center text-muted-foreground max-w-[100px] leading-tight" data-testid="membership-text-india">
+                The Institution of Engineers (INDIA)
+              </div>
+              <div className="text-xs text-center text-muted-foreground max-w-[100px] leading-tight" data-testid="membership-text-istd">
+                The Indian Society for Training and Development (ISTD)
+              </div>
+              <div className="text-xs text-center text-muted-foreground max-w-[100px] leading-tight" data-testid="membership-text-iiie">
+                Indian Institution of Industrial Engineering (IIIE)
+              </div>
+              <div className="text-xs text-center text-muted-foreground max-w-[100px] leading-tight" data-testid="membership-text-iimm">
+                Indian Institute Materials Management (IIMM)
+              </div>
+              <div className="text-xs text-center text-muted-foreground max-w-[100px] leading-tight" data-testid="membership-text-jsg">
                 Jain Social Group (JSG)
               </div>
-            </motion.div>
+            </div>
           </div>
         </motion.div>
       </div>
