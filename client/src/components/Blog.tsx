@@ -3,7 +3,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, ArrowRight, Users, Heart, BookOpen } from "lucide-react";
+import { Calendar, ArrowRight, Users, Flower2, BookOpen } from "lucide-react";
 
 const blogPosts = [
   {
@@ -18,7 +18,7 @@ const blogPosts = [
     excerpt: "Learn how mindfulness practices can transform your approach to workplace stress and improve overall well-being.",
     date: "March 10, 2024",
     category: "Wellness",
-    icon: Heart,
+    icon: Flower2,
   },
   {
     title: "Effective Study Techniques for Academic Excellence",
