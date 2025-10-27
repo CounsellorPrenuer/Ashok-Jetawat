@@ -3,7 +3,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, ArrowRight } from "lucide-react";
+import { Calendar, ArrowRight, Users, Heart, BookOpen } from "lucide-react";
 
 const blogPosts = [
   {
@@ -11,18 +11,21 @@ const blogPosts = [
     excerpt: "Discover proven techniques to enhance workplace efficiency and drive organizational success through effective team management.",
     date: "March 15, 2024",
     category: "Leadership",
+    icon: Users,
   },
   {
     title: "The Power of Mindfulness in Stress Management",
     excerpt: "Learn how mindfulness practices can transform your approach to workplace stress and improve overall well-being.",
     date: "March 10, 2024",
     category: "Wellness",
+    icon: Heart,
   },
   {
     title: "Effective Study Techniques for Academic Excellence",
     excerpt: "Evidence-based learning strategies that help students maximize retention and achieve outstanding academic results.",
     date: "March 5, 2024",
     category: "Education",
+    icon: BookOpen,
   },
 ];
 
@@ -74,23 +77,30 @@ export default function Blog() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {blogPosts.map((post, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              whileHover={{ y: -8 }}
-            >
-              <Card 
-                className="overflow-hidden h-full flex flex-col hover-elevate active-elevate-2 transition-all group"
-                data-testid={`blog-post-${index}`}
+          {blogPosts.map((post, index) => {
+            const IconComponent = post.icon;
+            return (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                whileHover={{ y: -8 }}
               >
-                <motion.div 
-                  className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 relative overflow-hidden"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
+                <Card 
+                  className="overflow-hidden h-full flex flex-col hover-elevate active-elevate-2 transition-all group"
+                  data-testid={`blog-post-${index}`}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent" />
-                </motion.div>
+                  <motion.div 
+                    className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 relative overflow-hidden flex items-center justify-center"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                    data-testid={`blog-image-${index}`}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent" />
+                    <IconComponent 
+                      className="w-24 h-24 text-primary/30 relative z-10 group-hover:text-primary/50 transition-colors" 
+                      strokeWidth={1.5}
+                    />
+                  </motion.div>
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
                     <Calendar className="w-4 h-4" />
@@ -107,7 +117,8 @@ export default function Blog() {
                 </div>
               </Card>
             </motion.div>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
     </section>
