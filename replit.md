@@ -172,6 +172,8 @@ Preferred communication style: Simple, everyday language.
 - Added "Active member of:" section in About component displaying 7 professional organization memberships with transparent background logos (CSI, UCCI, INDIA, ISTD, IIIE, IIMM, JSG) arranged with all logos in one row and organization names in a separate row below
 - Enhanced Blog section with category-specific icons: Users icon for Leadership, Heart icon for Wellness, BookOpen icon for Education, all centered in gradient image areas with hover effects
 - Fixed FreeCallModal positioning to properly center on screen with scrollable container and vertical margins for better UX on all screen sizes
+- Removed "Book a Free Call" button from navbar (keeping only in Hero section) as per user request
+- Made FreeCallModal significantly more compact: reduced padding (p-4), smaller inputs (h-9), condensed sections, removed large benefit boxes and timeline, simplified to essential form fields + simple footer badges for better screen fit
 
 **October 10, 2025**:
 - Implemented complete backend functionality with PostgreSQL schema for leads and bookings
