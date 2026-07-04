@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { CONTACT_EMAIL } from "@/lib/config";
 import { formatCurrency } from "@/lib/currency";
 import { workerPost } from "@/lib/workerApi";
-import { CheckCircle2, Loader2, Mail } from "lucide-react";
+import { Loader2, Mail } from "lucide-react";
 
 declare global {
   interface Window {
@@ -22,15 +22,6 @@ type Props = {
   title: string;
   category: string;
   price: number;
-};
-
-type CouponResult = {
-  valid: boolean;
-  discount_amount?: number;
-  discountAmount?: number;
-  final_amount?: number;
-  finalAmount?: number;
-  message?: string;
 };
 
 type OrderResult = {
@@ -64,41 +55,14 @@ export default function BookingModal({ open, onOpenChange, planId, title, catego
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [coupon, setCoupon] = useState("");
-  const [couponMessage, setCouponMessage] = useState("");
-  const [finalAmount, setFinalAmount] = useState(price);
-  const [isApplying, setIsApplying] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const openMailDraft = () => {
     const subject = encodeURIComponent(`Asian Counselling Center booking enquiry: ${title}`);
     const body = encodeURIComponent(
-      `Hello,\n\nI would like to book ${title} (${category}) for ${formatCurrency(finalAmount)}.\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nPlan ID: ${planId}\nCoupon: ${coupon || "None"}\n`,
+      `Hello,\n\nI would like to book ${title} (${category}) for ${formatCurrency(price)}.\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nPlan ID: ${planId}\n`,
     );
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-  };
-
-  const applyCoupon = async () => {
-    if (!coupon.trim()) {
-      setCouponMessage("Enter a coupon code.");
-      return;
-    }
-    setIsApplying(true);
-    try {
-      const result = await workerPost<CouponResult>("/api/coupons/preview", {
-        code: coupon.trim().toUpperCase(),
-        plan_id: planId,
-      });
-      const discount = Number(result.discountAmount ?? result.discount_amount ?? 0);
-      const total = Number(result.finalAmount ?? result.final_amount ?? Math.max(0, price - discount));
-      setFinalAmount(result.valid ? total : price);
-      setCouponMessage(result.message || (result.valid ? `Coupon applied. You save ${formatCurrency(discount)}.` : "Coupon is invalid or inactive."));
-    } catch (error) {
-      setFinalAmount(price);
-      setCouponMessage(error instanceof Error ? error.message : "Could not validate coupon.");
-    } finally {
-      setIsApplying(false);
-    }
   };
 
   const pay = async () => {
@@ -116,9 +80,7 @@ export default function BookingModal({ open, onOpenChange, planId, title, catego
         name: name.trim(),
         email: email.trim(),
         phone: phone.trim(),
-        coupon_code: coupon.trim().toUpperCase() || undefined,
       });
-      setFinalAmount(order.final_amount);
 
       const checkout = new window.Razorpay({
         key: order.key_id,
@@ -166,33 +128,23 @@ export default function BookingModal({ open, onOpenChange, planId, title, catego
       <DialogContent className="sm:max-w-lg max-h-[92vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-heading">Complete Your Booking</DialogTitle>
-          <DialogDescription>Enter your details, apply a coupon, then continue to secure Razorpay checkout.</DialogDescription>
+          <DialogDescription>Enter your details, then continue to secure Razorpay checkout.</DialogDescription>
         </DialogHeader>
         <div className="rounded-2xl bg-primary/5 border border-primary/20 p-4 space-y-2">
           <div className="flex justify-between gap-4"><span className="text-muted-foreground">Plan</span><strong className="text-right">{title}</strong></div>
           <div className="flex justify-between gap-4"><span className="text-muted-foreground">Category</span><span className="text-right">{category}</span></div>
-          <div className="flex justify-between gap-4 pt-2 border-t"><span>Amount</span><strong className="text-xl text-primary">{formatCurrency(finalAmount)}</strong></div>
+          <div className="flex justify-between gap-4 pt-2 border-t"><span>Amount</span><strong className="text-xl text-primary">{formatCurrency(price)}</strong></div>
         </div>
         <div className="grid gap-4">
           <div><Label htmlFor="checkout-name">Full name</Label><Input id="checkout-name" value={name} onChange={(event) => setName(event.target.value)} /></div>
           <div><Label htmlFor="checkout-email">Email</Label><Input id="checkout-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} /></div>
           <div><Label htmlFor="checkout-phone">Phone</Label><Input id="checkout-phone" type="tel" value={phone} onChange={(event) => setPhone(event.target.value)} /></div>
-          <div>
-            <Label htmlFor="checkout-coupon">Coupon code</Label>
-            <div className="flex gap-2">
-              <Input id="checkout-coupon" value={coupon} onChange={(event) => setCoupon(event.target.value.toUpperCase())} placeholder="Optional" />
-              <Button type="button" variant="outline" onClick={applyCoupon} disabled={isApplying}>
-                {isApplying ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
-              </Button>
-            </div>
-            {couponMessage && <p className="text-sm mt-2 flex gap-2 items-start"><CheckCircle2 className="w-4 h-4 mt-0.5 text-primary" />{couponMessage}</p>}
-          </div>
         </div>
         <div className="grid sm:grid-cols-2 gap-3 pt-2">
           <Button variant="outline" onClick={openMailDraft}><Mail className="w-4 h-4 mr-2" />Email Instead</Button>
           <Button onClick={pay} disabled={isProcessing}>
             {isProcessing ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
-            Pay {formatCurrency(finalAmount)}
+            Pay {formatCurrency(price)}
           </Button>
         </div>
       </DialogContent>
