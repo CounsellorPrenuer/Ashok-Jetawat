@@ -1,0 +1,9 @@
+export const PROJECT_ID = "ashokjetawat";
+export const SANITY_PROJECT_ID = "a1ht83cx";
+export const SANITY_DATASET = "production";
+export const SANITY_STUDIO_HOST = "Ashok-Jetawat";
+export const GITHUB_PAGES_REPO_NAME = "Ashok-Jetawat";
+export const SITE_BASE = "/Ashok-Jetawat";
+export const WORKER_URL = "https://multi-tenant-platform.gauravgoodreads.workers.dev";
+export const CONTACT_EMAIL = "drashokjetawat@gmail.com";
+export const CONTACT_PHONE = "+91 90015 56010";

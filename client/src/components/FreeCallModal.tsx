@@ -10,8 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import { workerPost } from "@/lib/workerApi";
 import { useToast } from "@/hooks/use-toast";
 
 interface FreeCallModalProps {
@@ -26,32 +25,35 @@ export default function FreeCallModal({ isOpen, onClose }: FreeCallModalProps) {
     background: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const createLeadMutation = useMutation({
-    mutationFn: async (data: typeof formData) => {
-      return await apiRequest("POST", "/api/leads", data);
-    },
-    onSuccess: () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      await workerPost("/api/forms/submit", {
+        name: formData.fullName,
+        email: "free-call@inquiry.local",
+        phone: formData.phoneNumber,
+        message: `Free call request. Background: ${formData.background}`,
+        plan_id: "free-call",
+      });
       setSubmitted(true);
       setTimeout(() => {
         setSubmitted(false);
-        setFormData({ fullName: '', phoneNumber: '', background: '' });
+        setFormData({ fullName: "", phoneNumber: "", background: "" });
         onClose();
       }, 2000);
-    },
-    onError: (error: any) => {
+    } catch (error) {
       toast({
         title: "Error",
-        description: error.message || "Failed to submit. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to submit. Please try again.",
         variant: "destructive",
       });
-    },
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    createLeadMutation.mutate(formData);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -153,11 +155,11 @@ export default function FreeCallModal({ isOpen, onClose }: FreeCallModalProps) {
                     <Button 
                       type="submit" 
                       className="w-full" 
-                      disabled={createLeadMutation.isPending}
+                      disabled={isSubmitting}
                       data-testid="modal-button-submit"
                     >
                       <Phone className="w-4 h-4 mr-2" />
-                      {createLeadMutation.isPending ? "Submitting..." : "Book Free Call"}
+                      {isSubmitting ? "Submitting..." : "Book Free Call"}
                     </Button>
                   </form>
                 ) : (

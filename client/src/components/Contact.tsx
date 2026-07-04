@@ -4,8 +4,11 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, CheckCircle, Loader2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { CONTACT_EMAIL, CONTACT_PHONE } from "@/lib/config";
+import { workerPost } from "@/lib/workerApi";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Contact() {
   const ref = useRef(null);
@@ -18,16 +21,32 @@ export default function Contact() {
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', phone: '', message: '' });
-    }, 3000);
+    setIsSubmitting(true);
+    try {
+      await workerPost("/api/forms/submit", {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+      });
+      setSubmitted(true);
+      setFormData({ name: "", email: "", phone: "", message: "" });
+      setTimeout(() => setSubmitted(false), 4000);
+    } catch (error) {
+      toast({
+        title: "Could not send message",
+        description: error instanceof Error ? error.message : "Please try again or email us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -128,8 +147,8 @@ export default function Contact() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Button type="submit" size="lg" className="w-full text-lg" data-testid="button-submit">
-                  Send Message
+                <Button type="submit" size="lg" className="w-full text-lg" data-testid="button-submit" disabled={isSubmitting}>
+                  {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : "Send Message"}
                 </Button>
               </motion.div>
               
@@ -167,7 +186,7 @@ export default function Contact() {
                       </div>
                       <div>
                         <div className="font-medium mb-1">Email</div>
-                        <div className="text-muted-foreground">drashokjetawat@gmail.com</div>
+                        <div className="text-muted-foreground">{CONTACT_EMAIL}</div>
                       </div>
                     </div>
                   </Card>
@@ -184,7 +203,7 @@ export default function Contact() {
                       </div>
                       <div>
                         <div className="font-medium mb-1">Phone</div>
-                        <div className="text-muted-foreground">+91 90015 56010</div>
+                        <div className="text-muted-foreground">{CONTACT_PHONE}</div>
                       </div>
                     </div>
                   </Card>

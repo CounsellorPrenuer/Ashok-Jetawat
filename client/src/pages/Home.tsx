@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import SpeakingTopics from "@/components/SpeakingTopics";
+import ServicesSection from "@/components/ServicesSection";
 import TrustedBy from "@/components/TrustedBy";
 import Gallery from "@/components/Gallery";
 import Pricing from "@/components/Pricing";
@@ -18,6 +19,7 @@ export default function Home() {
       <main>
         <Hero />
         <About />
+        <ServicesSection />
         <SpeakingTopics />
         <TrustedBy />
         <Gallery />

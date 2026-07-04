@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, CreditCard, Building2, Calendar, Mail, Phone, User, CheckCircle2 } from "lucide-react";
+import { X, CreditCard, Building2, Calendar, Mail, Phone, User, CheckCircle2, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,8 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import { CONTACT_EMAIL } from "@/lib/config";
+import { formatCurrency } from "@/lib/currency";
+import { workerPost } from "@/lib/workerApi";
 import { useToast } from "@/hooks/use-toast";
 
 interface PaymentModalProps {
@@ -19,138 +20,123 @@ interface PaymentModalProps {
   onClose: () => void;
 }
 
-declare global {
-  interface Window {
-    Razorpay: any;
-  }
+type OrderResult = {
+  key_id: string;
+  order_id: string;
+  amount: number;
+  currency: string;
+  lead_id: string;
+  final_amount: number;
+};
+
+function loadRazorpayScript() {
+  return new Promise<boolean>((resolve) => {
+    if (window.Razorpay) return resolve(true);
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
 }
 
 export default function PaymentModal({ isOpen, onClose }: PaymentModalProps) {
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phoneNumber: '',
-    organizationType: '',
-    organizationName: '',
-    eventDate: '',
-    amount: '10000',
+    fullName: "",
+    email: "",
+    phoneNumber: "",
+    organizationType: "",
+    organizationName: "",
+    eventDate: "",
+    amount: "10000",
   });
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const { toast } = useToast();
+  const retainerAmount = Number(formData.amount) || 10000;
 
-  const createBookingMutation = useMutation({
-    mutationFn: async (data: typeof formData) => {
-      const response = await apiRequest("POST", "/api/bookings", data);
-      return await response.json();
-    },
-    onSuccess: (booking) => {
-      // Load Razorpay script if not already loaded
-      loadRazorpayScript(() => {
-        initiateRazorpayPayment(booking);
-      });
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to create booking. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const loadRazorpayScript = (callback: () => void) => {
-    if (window.Razorpay) {
-      callback();
-      return;
-    }
-
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.async = true;
-    script.onload = callback;
-    script.onerror = () => {
-      toast({
-        title: "Error",
-        description: "Failed to load payment gateway. Please try again.",
-        variant: "destructive",
-      });
-    };
-    document.body.appendChild(script);
+  const openMailDraft = () => {
+    const subject = encodeURIComponent("Speaking engagement booking retainer enquiry");
+    const body = encodeURIComponent(
+      `Hello,\n\nI would like to pay a booking retainer of ${formatCurrency(retainerAmount)}.\n\nName: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${formData.phoneNumber}\nOrganization: ${formData.organizationName} (${formData.organizationType})\nEvent date: ${formData.eventDate || "TBD"}\n`,
+    );
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
   };
 
-  const initiateRazorpayPayment = (booking: any) => {
-    if (!booking || !booking.razorpayOrderId) {
-      toast({
-        title: "Error",
-        description: "Invalid booking data. Please try again.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    const options = {
-      key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_dummy_key',
-      amount: parseInt(formData.amount) * 100,
-      currency: 'INR',
-      name: 'Asian Counselling Center',
-      description: 'Speaking Engagement Booking Retainer',
-      image: '/logo.png',
-      order_id: booking.razorpayOrderId,
-      handler: async function (response: any) {
-        try {
-          await apiRequest("PATCH", `/api/bookings/${booking.id}/payment`, {
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: response.razorpay_signature,
-          });
-          
-          setPaymentSuccess(true);
-          setTimeout(() => {
-            setPaymentSuccess(false);
-            setFormData({
-              fullName: '',
-              email: '',
-              phoneNumber: '',
-              organizationType: '',
-              organizationName: '',
-              eventDate: '',
-              amount: '10000',
-            });
-            onClose();
-          }, 3000);
-        } catch (error: any) {
-          toast({
-            title: "Payment Verification Failed",
-            description: error.message || "Please contact support.",
-            variant: "destructive",
-          });
-        }
-      },
-      prefill: {
-        name: formData.fullName,
-        email: formData.email,
-        contact: formData.phoneNumber,
-      },
-      theme: {
-        color: '#E63946',
-      },
-      modal: {
-        ondismiss: function() {
-          toast({
-            title: "Payment Cancelled",
-            description: "You cancelled the payment process.",
-          });
-        }
-      }
-    };
-
-    const razorpay = new window.Razorpay(options);
-    razorpay.open();
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    createBookingMutation.mutate(formData);
+    setIsProcessing(true);
+    try {
+      if (!(await loadRazorpayScript()) || !window.Razorpay) {
+        throw new Error("Razorpay could not load on this browser.");
+      }
+      const order = await workerPost<OrderResult>("/api/payments/create-order", {
+        plan_id: "booking-retainer",
+        amount: retainerAmount,
+        name: formData.fullName.trim(),
+        email: formData.email.trim(),
+        phone: formData.phoneNumber.trim(),
+      });
+
+      const checkout = new window.Razorpay({
+        key: order.key_id,
+        amount: order.amount,
+        currency: order.currency,
+        name: "Asian Counselling Center",
+        description: "Speaking Engagement Booking Retainer",
+        order_id: order.order_id,
+        prefill: {
+          name: formData.fullName,
+          email: formData.email,
+          contact: formData.phoneNumber,
+        },
+        theme: { color: "#E63946" },
+        handler: async (response: Record<string, string>) => {
+          try {
+            await workerPost("/api/payments/verify", {
+              plan_id: "booking-retainer",
+              lead_id: order.lead_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+            setPaymentSuccess(true);
+            setTimeout(() => {
+              setPaymentSuccess(false);
+              setFormData({
+                fullName: "",
+                email: "",
+                phoneNumber: "",
+                organizationType: "",
+                organizationName: "",
+                eventDate: "",
+                amount: "10000",
+              });
+              onClose();
+            }, 3000);
+          } catch (error) {
+            toast({
+              title: "Payment Verification Failed",
+              description: error instanceof Error ? error.message : "Please contact support.",
+              variant: "destructive",
+            });
+          } finally {
+            setIsProcessing(false);
+          }
+        },
+        modal: {
+          ondismiss: () => setIsProcessing(false),
+        },
+      });
+      checkout.open();
+    } catch (error) {
+      setIsProcessing(false);
+      toast({
+        title: "Checkout unavailable",
+        description: error instanceof Error ? `${error.message} You can email us instead.` : "Please use the email fallback.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -246,8 +232,8 @@ export default function PaymentModal({ isOpen, onClose }: PaymentModalProps) {
                           <Building2 className="w-4 h-4" />
                           Organization Type *
                         </label>
-                        <Select 
-                          value={formData.organizationType} 
+                        <Select
+                          value={formData.organizationType}
                           onValueChange={(value) => setFormData({ ...formData, organizationType: value })}
                           required
                         >
@@ -294,23 +280,23 @@ export default function PaymentModal({ isOpen, onClose }: PaymentModalProps) {
                     <div className="bg-muted/50 rounded-lg p-4 mt-6">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm font-medium">Booking Retainer Amount</span>
-                        <span className="text-2xl font-bold text-primary">₹{parseInt(formData.amount).toLocaleString('en-IN')}</span>
+                        <span className="text-2xl font-bold text-primary">{formatCurrency(retainerAmount)}</span>
                       </div>
                       <p className="text-xs text-muted-foreground">
                         This retainer secures your booking date. Final amount will be discussed based on your requirements.
                       </p>
                     </div>
 
-                    <Button 
-                      type="submit" 
-                      className="w-full text-lg py-6 mt-6" 
-                      size="lg"
-                      disabled={createBookingMutation.isPending}
-                      data-testid="payment-button-submit"
-                    >
-                      <CreditCard className="w-5 h-5 mr-2" />
-                      {createBookingMutation.isPending ? "Processing..." : "Proceed to Payment"}
-                    </Button>
+                    <div className="grid sm:grid-cols-2 gap-3 mt-6">
+                      <Button type="button" variant="outline" onClick={openMailDraft}>
+                        <Mail className="w-4 h-4 mr-2" />
+                        Email Instead
+                      </Button>
+                      <Button type="submit" className="text-lg py-6" size="lg" disabled={isProcessing} data-testid="payment-button-submit">
+                        {isProcessing ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <CreditCard className="w-5 h-5 mr-2" />}
+                        {isProcessing ? "Processing..." : "Proceed to Payment"}
+                      </Button>
+                    </div>
 
                     <p className="text-xs text-center text-muted-foreground mt-4">
                       Secure payment powered by Razorpay. Your payment information is encrypted and secure.
@@ -324,7 +310,7 @@ export default function PaymentModal({ isOpen, onClose }: PaymentModalProps) {
                   >
                     <CheckCircle2 className="w-16 h-16 text-green-600 mx-auto mb-4" />
                     <h3 className="font-semibold text-lg mb-2">Payment Successful!</h3>
-                    <p className="text-muted-foreground">Your booking has been confirmed. We'll contact you within 24 hours.</p>
+                    <p className="text-muted-foreground">Your booking has been confirmed. We&apos;ll contact you within 24 hours.</p>
                   </motion.div>
                 )}
               </div>
