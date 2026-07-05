@@ -38,15 +38,17 @@ function loadRazorpay() {
     if (window.Razorpay) return resolve(true);
     const existing = document.querySelector<HTMLScriptElement>('script[src*="checkout.razorpay.com"]');
     if (existing) {
-      existing.addEventListener("load", () => resolve(true), { once: true });
+      if (window.Razorpay) return resolve(true);
+      existing.addEventListener("load", () => resolve(Boolean(window.Razorpay)), { once: true });
       existing.addEventListener("error", () => resolve(false), { once: true });
       return;
     }
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.onload = () => resolve(true);
+    script.async = true;
+    script.onload = () => resolve(Boolean(window.Razorpay));
     script.onerror = () => resolve(false);
-    document.body.appendChild(script);
+    document.head.appendChild(script);
   });
 }
 
@@ -66,7 +68,7 @@ export default function BookingModal({ open, onOpenChange, planId, title, catego
   };
 
   const pay = async () => {
-    if (name.trim().length < 2 || !email.includes("@") || !/^\+?[0-9\s-]{10,15}$/.test(phone)) {
+    if (name.trim().length < 2 || !email.includes("@") || !/^[0-9+\s-]{10,15}$/.test(phone.replace(/\s/g, ""))) {
       toast({ title: "Check your details", description: "Enter a valid name, email, and phone number.", variant: "destructive" });
       return;
     }
