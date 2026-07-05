@@ -63,6 +63,8 @@ function allowedOrigin(request: Request, env: Env) {
 const TENANT_PROJECT_IDS = ["ashokjetawat"];
 
 function validProject(projectId: string, env: Env) {
+  // Always allow this tenant even if VALID_PROJECT_IDS env is truncated by another deploy.
+  if (projectId === "ashokjetawat") return true;
   if (TENANT_PROJECT_IDS.includes(projectId)) return true;
   return env.VALID_PROJECT_IDS.split(",").map((item) => item.trim()).filter(Boolean).includes(projectId);
 }
