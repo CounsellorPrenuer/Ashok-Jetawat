@@ -60,8 +60,11 @@ function allowedOrigin(request: Request, env: Env) {
   return env.ALLOWED_ORIGINS.split(",").map((item) => item.trim()).includes(origin) ? origin : "";
 }
 
+const TENANT_PROJECT_IDS = ["ashokjetawat"];
+
 function validProject(projectId: string, env: Env) {
-  return env.VALID_PROJECT_IDS.split(",").map((item) => item.trim()).includes(projectId);
+  if (TENANT_PROJECT_IDS.includes(projectId)) return true;
+  return env.VALID_PROJECT_IDS.split(",").map((item) => item.trim()).filter(Boolean).includes(projectId);
 }
 
 function canonicalPlanId(projectId: string, rawPlanId: string) {
